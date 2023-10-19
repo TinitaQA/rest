@@ -2,17 +2,20 @@ package ru.netology.javaqa.javaqamvn.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class RestServiceTest {
 
-    @Test
-    public void shouldCalcMonthsOfRest() {
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/rest.csv")
+
+    public void shouldCalcMonthsOfRest(int expected, int income, int expenses, int threshold) {
         RestService service = new RestService();
 
-        int expected = 2;
-        int actual = service.calculate(100_000, 60_000, 150_000);
+        int actual = service.calculate(income, expenses, threshold);
 
         Assertions.assertEquals(expected, actual);
     }
 }
-
